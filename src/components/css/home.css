@@ -1,5 +1,5 @@
 body{
-    background-color: #010e1b;
+    background-color: #161214;
     color: white;
 }
 
@@ -9,4 +9,15 @@ body{
 
 .title-page{
     padding: 35px;
+}
+
+.container-notes{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    align-self: center;    
+}
+
+.icons-home .col a, i{
+    text-decoration: none !important;
 }
