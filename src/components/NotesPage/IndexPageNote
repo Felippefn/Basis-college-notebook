@@ -1,0 +1,88 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+function IndexPageNote() {
+  const { subjectId, noteId } = useParams(); // Get subjectId and noteId from the URL
+  const [note, setNote] = useState(null); // To hold a single note
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingContent, setIsEditingContent] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  // Fetch the note using subjectId and noteId
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/subjects/${subjectId}/notes/${noteId}`)
+      .then(res => {
+        setNote(res.data);
+        setTitle(res.data.title); // Set title state
+        setContent(res.data.content); // Set content state
+      })
+      .catch(err => console.error(err));
+  }, [subjectId, noteId]);
+
+  // Save updated note to the backend
+  const saveNote = () => {
+    axios.put(`http://localhost:5000/api/subjects/${subjectId}/notes/${noteId}`, {
+      title,
+      content
+    })
+      .then(res => {
+        setNote(res.data); // Update the note with the saved changes
+        setIsEditingTitle(false);
+        setIsEditingContent(false);
+      })
+      .catch(err => console.error(err));
+  };
+
+  // Handling "Enter" key press for saving the changes
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      saveNote();
+    }
+  };
+
+  return (
+    <div className='container'>
+      <h1>Note</h1>
+      {note ? (
+        <div>
+          {/* Title Editing */}
+          {isEditingTitle ? (
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onBlur={saveNote} // Save when the input loses focus
+              onKeyPress={handleKeyPress} // Save when "Enter" is pressed
+              autoFocus
+            />
+          ) : (
+            <h2 onClick={() => setIsEditingTitle(true)}>{title || 'Untitled Note'}</h2>
+          )}
+
+          {/* Content Editing */}
+          {isEditingContent ? (
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              onBlur={saveNote} // Save when the textarea loses focus
+              onKeyPress={handleKeyPress} // Save when "Enter" is pressed
+              autoFocus
+              rows={10}
+              cols={50}
+            />
+          ) : (
+            <p onClick={() => setIsEditingContent(true)}>
+              {content || 'No content available. Click to add.'}
+            </p>
+          )}
+        </div>
+      ) : (
+        <p>Loading note...</p>
+      )}
+    </div>
+  );
+}
+
+export default IndexPageNote;

@@ -68,6 +68,29 @@ router.get('/subjects/:subjectId/notes', async (req, res) => {
   }
 });
 
+// Get a specific note for a specific subject
+router.get('/subjects/:subjectId/notes/:noteId', async (req, res) => {
+  try {
+    // Find the subject by its ID and populate the 'notes' field
+    const subject = await Subject.findById(req.params.subjectId).populate('notes'); 
+    if (!subject) {
+      return res.status(404).json({ error: 'Subject not found' });
+    }
+
+    // Find the specific note in the populated notes array
+    const note = subject.notes.find(note => note._id.toString() === req.params.noteId);
+    
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching note' });
+  }
+});
+
+
 
 
 module.exports = router;

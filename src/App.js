@@ -10,6 +10,8 @@ import Event from './components/Event'
 import ToDoList from './components/ToDoList'
 import './components/css/home.css'
 import ManageNotes from './components/NotesPage/ManageNotes';
+import IndexPageNote from './components/NotesPage/IndexPageNote'; // Update the path based on your structure
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/manage-notes" element={<ManageNotes />} />
         <Route path="/subjects/:subjectId/notes" element={<SubjectNotesPage />} />
+        <Route path="/subjects/:subjectId/notes/:noteId" element={<IndexPageNote />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/event" element={<Event />} />
         <Route path="/todo-list" element={<ToDoList />} />

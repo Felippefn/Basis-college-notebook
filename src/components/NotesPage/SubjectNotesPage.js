@@ -19,7 +19,7 @@ function SubjectNotesPageNote() {
       {notes.length > 0 ? (
         notes.map(note => (
           <div  key={note._id}> {/* Assign unique key */}
-            <h2>{note.title} | {note.updatedAt}</h2>
+            <a href={`notes/${note._id}`}>{note.title} | {note.updatedAt}</a>
           </div>
         ))
       ) : (
