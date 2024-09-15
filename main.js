@@ -1,7 +1,9 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-function createWindow() {
+async function createWindow() {
+  await connectToDatabase(); // Ensure the database is connected before creating the window
+  
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -24,6 +26,8 @@ app.whenReady().then(() => {
     }
   });
 });
+
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

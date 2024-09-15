@@ -26,7 +26,7 @@ function Home() {
         <div className="row">
           <div className="col">
             <GrAdd fontSize={"100px"} />
-            <p>Add Notes</p>
+            <p>Manage Notes</p>
           </div>
           <div className="col">
             <GrSchedules fontSize={"100px"} />
