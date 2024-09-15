@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { GrLinkPrevious } from "react-icons/gr";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function IndexPageNote() {
   const { subjectId, noteId } = useParams(); // Get subjectId and noteId from the URL
@@ -41,9 +43,11 @@ function IndexPageNote() {
       saveNote();
     }
   };
-
+  const navigate = useNavigate(); // Initialize the navigate function
   return (
     <div className='container'>
+      <GrLinkPrevious onClick={() => navigate(-1)}
+        style={{ cursor: 'pointer', fontSize: '24px' }} />
       <h1>Note</h1>
       {note ? (
         <div>

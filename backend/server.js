@@ -14,11 +14,11 @@ app.use(express.urlencoded({ extended: true })); // Optional: parse URL-encoded 
 // MongoDB connection
 const uri = 'mongodb://localhost:27017/college-notebook'; // Replace with your MongoDB URI
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Error connecting to MongoDB:', err));
 
 app.use('/api', noteRoutes);
 
 app.listen(port, () => {
-  console.log(`Backend server is running on port ${port}`);
+    console.log(`Backend server is running on port ${port}`);
 });

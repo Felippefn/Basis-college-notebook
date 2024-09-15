@@ -17,7 +17,7 @@ function Home() {
       <div className="container">
         <div className="row justify-content-center mb-5 mt-0">
           <div className="alert alert-secondary alert-dismissible fade show col-3 text-center" role="alert">
-            <strong>{Hello()}</strong> You should check in on some of those fields below.
+            <strong>{Hello()}</strong> Welcome to the first version of Basis, enjoy!
             <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
