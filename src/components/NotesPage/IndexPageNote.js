@@ -1,91 +1,143 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { GrLinkPrevious } from "react-icons/gr";
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button, Form, Spinner, Container, Row, Col } from 'react-bootstrap';
 
 function IndexPageNote() {
-  const { subjectId, noteId } = useParams(); // Get subjectId and noteId from the URL
-  const [note, setNote] = useState(null); // To hold a single note
+  const { topicId, noteId } = useParams();
+  const [note, setNote] = useState(null);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [topic, setTopic] = useState('');
+  const [typing, setTyping] = useState(false);
+  const navigate = useNavigate();
 
-  // Fetch the note using subjectId and noteId
+  // Fetch the note using topicId and noteId
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/subjects/${subjectId}/notes/${noteId}`)
+    axios.get(`http://localhost:5000/api/topics/${topicId}/notes/${noteId}`)
       .then(res => {
         setNote(res.data);
-        setTitle(res.data.title); // Set title state
-        setContent(res.data.content); // Set content state
+        setTitle(res.data.title);
+        setContent(res.data.content);
       })
       .catch(err => console.error(err));
-  }, [subjectId, noteId]);
+  }, [topicId, noteId]);
 
-  // Save updated note to the backend
-  const saveNote = () => {
-    axios.put(`http://localhost:5000/api/subjects/${subjectId}/notes/${noteId}`, {
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/topics/${topicId}/notes/`)
+      .then(res => {
+        setTopic(res.data.name)
+      })
+      .catch(err => console.error(err));
+  }, [topicId]);
+
+  // Handle save action, either auto-save or button click
+  const saveNote = useCallback(() => {
+    axios.put(`http://localhost:5000/api/topics/${topicId}/notes/${noteId}`, {
       title,
       content
     })
       .then(res => {
-        setNote(res.data); // Update the note with the saved changes
+        setNote(res.data);
         setIsEditingTitle(false);
         setIsEditingContent(false);
       })
       .catch(err => console.error(err));
+  }, [title, content, topicId, noteId]); // Add dependencies that affect saveNote
+
+  // Auto-save when user stops typing for 2 seconds
+  useEffect(() => {
+    if (typing) {
+      const timeout = setTimeout(() => {
+        saveNote(); // Trigger save when user stops typing
+        setTyping(false);
+      }, 2000); // Auto-save after 2 seconds of inactivity
+
+      return () => clearTimeout(timeout);
+    }
+  }, [typing, saveNote]);
+
+  const handleInputChange = (setter) => (e) => {
+    setter(e.target.value);
+    setTyping(true); // Set typing state for auto-save
   };
 
-  // Handling "Enter" key press for saving the changes
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      saveNote();
-    }
-  };
-  const navigate = useNavigate(); // Initialize the navigate function
   return (
-    <div className='container'>
-      <GrLinkPrevious onClick={() => navigate(-1)}
-        style={{ cursor: 'pointer', fontSize: '24px' }} />
-      <h1>Note</h1>
+    <Container className="mt-4">
+      <Row className="align-items-center mb-3">
+        <Col xs="auto">
+          <GrLinkPrevious onClick={() => navigate(-1)}
+           className="back-button"/>
+        </Col>
+        <Col>
+          <h1 className="text-center">{topic}</h1>
+        </Col>
+      </Row>
+
       {note ? (
-        <div>
+        <Form>
           {/* Title Editing */}
-          {isEditingTitle ? (
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onBlur={saveNote} // Save when the input loses focus
-              onKeyPress={handleKeyPress} // Save when "Enter" is pressed
-              autoFocus
-            />
-          ) : (
-            <h2 onClick={() => setIsEditingTitle(true)}>{title || 'Untitled Note'}</h2>
-          )}
+          <Form.Group className="mb-3">
+            {isEditingTitle ? (
+              <Form.Control
+                type="text"
+                value={title}
+                onChange={handleInputChange(setTitle)}
+                onBlur={() => setIsEditingTitle(false)}
+                autoFocus
+                className="editing-input" // Apply custom class
+              />
+            ) : (
+              <h3
+                onClick={() => setIsEditingTitle(true)}
+                className="non-editing-text"
+                style={{ cursor: 'pointer' }}
+              >
+                {title || 'Untitled Note'}
+              </h3>
+            )}
+          </Form.Group>
 
           {/* Content Editing */}
-          {isEditingContent ? (
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              onBlur={saveNote} // Save when the textarea loses focus
-              onKeyPress={handleKeyPress} // Save when "Enter" is pressed
-              autoFocus
-              rows={10}
-              cols={50}
-            />
-          ) : (
-            <p onClick={() => setIsEditingContent(true)}>
-              {content || 'No content available. Click to add.'}
-            </p>
-          )}
-        </div>
+          <Form.Group className="mb-4">
+            {isEditingContent ? (
+              <Form.Control
+                as="textarea"
+                value={content}
+                onChange={handleInputChange(setContent)}
+                onBlur={() => setIsEditingContent(false)}
+                autoFocus
+                rows={5}
+                className="editing-textarea" // Apply custom class
+              />
+            ) : (
+              <p
+                onClick={() => setIsEditingContent(true)}
+                className="non-editing-text"
+                style={{ backgroundColor: 'transparent', padding: '10px', cursor: 'pointer', borderRadius: '5px' }}
+              >
+                {content || 'No content available. Click to add.'}
+              </p>
+            )}
+          </Form.Group>
+
+          {/* Save Button */}
+          <Button variant="primary" onClick={saveNote}>
+            Save Changes
+          </Button>
+        </Form>
       ) : (
-        <p>Loading note...</p>
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+          <p>Loading note...</p>
+        </div>
       )}
-    </div>
+    </Container>
   );
 }
 

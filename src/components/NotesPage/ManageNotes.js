@@ -17,9 +17,9 @@ function ManageNotes() {
   return (
 
     <div className='container'>
-      <GrLinkPrevious onClick={() => navigate(-1)}
-        style={{ cursor: 'pointer', fontSize: '24px' , margin:'0px',}} />
-      <h1>Your Topics</h1>
+       <GrLinkPrevious onClick={() => navigate(-1)}
+           className="back-button"/>
+      <h1 style={{padding: '30px'}}>Your Topics</h1>
       {topics.map(topic => (
         <div key={topic._id}>
           <h2><GrAdd fontSize={"25px"} /> {topic.name}</h2>

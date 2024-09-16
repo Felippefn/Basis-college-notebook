@@ -21,7 +21,7 @@ router.post('/add/topics', (req, res) => {
 
 
 // Add a note to a topics
-router.post('/add/topics/:subjectId/notes', async (req, res) => {
+router.post('/add/topics/:topicId/notes', async (req, res) => {
   const { title, content } = req.body;
 
   try {
@@ -62,7 +62,7 @@ router.get('/topics/:topicId/notes', async (req, res) => {
     if (!topic) {
       return res.status(404).json({ error: 'Topic not found' });
     }
-    res.json(topic.notes);
+    res.json(topic);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching notes' });
   }

@@ -24,22 +24,22 @@ function Home() {
       </div>
       <div className="container icons-home">
         <div className="row">
-          <div className="col">
+          <a href='/manage-notes' className="col tagHome">
             <GrAdd fontSize={"100px"} />
             <p>Manage Notes</p>
-          </div>
-          <div className="col">
+          </a>
+          <a href='/schedule' className="col tagHome">
             <GrSchedules fontSize={"100px"} />
             <p>Check Schedule</p>
-          </div>
-          <div className="col">
+          </a>
+          <a href='/event' className="col tagHome">
             <GrCalendar fontSize={"100px"} />
             <p>Events</p>
-          </div>
-          <div className="col">
+          </a>
+          <a href='/todo-list' className="col tagHome">
             <GrList fontSize={"100px"} />
             <p>To-Do List</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>

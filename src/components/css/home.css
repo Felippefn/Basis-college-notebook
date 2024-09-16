@@ -21,3 +21,69 @@ body{
 .icons-home .col a, i{
     text-decoration: none !important;
 }
+
+/* Custom style when editing inputs */
+.editing-input {
+    background-color: transparent;
+    border: 2px solid #007bff;
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .editing-textarea {
+    background-color: transparent;
+    border: 2px solid #007bff;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Style when text is not in editing mode */
+  .non-editing-text {
+    font-size: 1.5em;
+    color: #fff;
+    transition: color 0.2s ease;
+  }
+  
+  .non-editing-text:hover {
+    color: #007bff;
+  }
+  
+  /* Custom form styles for better UX */
+  .form-label {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+    .tagHome {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.tagHome:hover {
+    transform: scale(1.05); /* Slight scaling */
+    cursor: pointer; /* Change the cursor to pointer */
+}
+
+  
+  .back-button {
+    position: absolute;
+    top: 10%;
+    left: 20px;
+    font-size: 24px; /* Adjust the size as needed */
+    cursor: pointer;
+    z-index: 1000; /* Ensure it stays on top */
+    
+  }
+  
+  @media (max-width: 768px) {
+    .back-button {
+      top: 10%;
+      left: 10px;
+      font-size: 20px; /* Adjust size for smaller devices */
+    }
+  }
