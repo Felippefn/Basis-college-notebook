@@ -4,6 +4,7 @@ import { GrLinkPrevious } from "react-icons/gr";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
 function TopicNotesPageNote() {
   const { topicId } = useParams(); // Get subjectId from the URL
   const [notes, setNotes] = useState([]);
@@ -28,11 +29,12 @@ function TopicNotesPageNote() {
     <div className='container'>
        <GrLinkPrevious onClick={() => navigate(-1)}
            className="back-button"/>
-      <h1>{topic}</h1>
+      <h1>{topic} </h1>
+  
       {notes.length > 0 ? (
         notes.map(note => (
           <div key={note._id}> {/* Assign unique key */}
-            <a href={`notes/${note._id}`}>{note.title} | {note.updatedAt}</a>
+            <a href={`notes/${note._id}`}>{note.title} | {note.updatedAt} </a>
           </div>
         ))
       ) : (

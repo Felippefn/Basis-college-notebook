@@ -10,7 +10,7 @@ import IndexPageNote from './components/NotesPage/IndexPageNote';
 import TopicNotesPage from './components/NotesPage/TopicNotesPage'; // Create this component to display notes
 import Schedule from './components/Schedule'
 import Event from './components/Event'
-import ToDoList from './components/ToDoList'
+import ToDoList from './components/ToDoListPage/ToDoList'
 import './components/css/home.css'
 import ManageNotes from './components/NotesPage/ManageNotes';
 
