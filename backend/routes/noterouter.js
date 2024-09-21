@@ -54,19 +54,29 @@ router.get('/topics/:topicId/notes/:noteId', async (req, res) => {
 // ==================== POST ==========================
 
 // Create a new topics
-router.post('/add/topics', (req, res) => {
+router.post('/add/topics', async (req, res) => {
   const { name } = req.body;  // Extract 'name' from the request body
 
   // Create new topics object with 'name' field
   const newTopic = new Topic({ name });
 
-  newTopic.save()
-    .then(topic => res.status(201).json(topic))
-    .catch(err => {
-      console.error('MongoDB Save Error:', err);  // Log the exact MongoDB error
-      res.status(400).json({ error: 'Unable to create topics' });
-    });
+  try {
+    // Check if the topic already exists
+    const existingTopic = await Topic.findOne({ name });
+    if (existingTopic) {
+      return res.status(400).json({ error: 'Topic already exists' });
+    }
+
+    // Save the new topic if no duplicates are found
+    const savedTopic = await newTopic.save();
+    return res.status(201).json(savedTopic);
+
+  } catch (error) {
+    console.error('Error:', error);  // Log the error for debugging
+    return res.status(500).json({ error: 'An error occurred while creating the topic' });
+  }
 });
+
 
 
 // Add a note to a topics
@@ -94,6 +104,8 @@ router.post('/add/topics/:topicId/notes', async (req, res) => {
     res.status(400).json({ error: 'Error adding note to topic' });
   }
 });
+
+
 
 
 // ================================ PUT =====================================
@@ -128,5 +140,37 @@ router.put('/topics/:topicId/notes/:noteId', async (req, res) => {
   }
 });
 
+// ================================ DELETE =====================================
+
+router.delete("/topics/:topicId/notes/del", async (req, res) => {
+  try {
+    const topic = await Topic.findByIdAndDelete(req.params.topicId);
+
+    if (!topic) {
+      return res.status(404).json({ error: 'Topic not found' });
+    }
+
+    res.status(204).send(); // No content to send back
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting topic", error });
+  }
+});
+
+
+router.delete("/topics/:topicId/notes/:noteId", async (req, res) => {
+  try {
+    const topic = await Topic.findById(req.params.topicId);
+    if (!topic) {
+      return res.status(404).json({ error: 'Topic not found' });
+    }
+    const note = await Note.findByIdAndDelete(req.params.noteId);
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+    res.status(204).send()
+  } catch (error) {
+    res.status(500).send({message: "Error deleting note", error})
+  }
+});
 
 module.exports = router;

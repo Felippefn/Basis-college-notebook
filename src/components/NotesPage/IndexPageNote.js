@@ -48,6 +48,20 @@ function IndexPageNote() {
       .catch(err => console.error(err));
   }, [title, content, topicId, noteId]); // Add dependencies that affect saveNote
 
+  const DeleteTopicAndRefresh = async () => {
+    window.confirm();
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/topics/${topicId}/notes/${noteId}/del`);
+
+      if (response.status === 204) {
+        navigate(-1); // Navigate to manage-notes instead of going back
+        window.location.reload(); // Refresh the page after navigating back
+      }
+    } catch (err) {
+      console.error("Error deleting topic:", err);
+    }
+  };
+
   // Auto-save when user stops typing for 2 seconds
   useEffect(() => {
     if (typing) {
@@ -73,7 +87,15 @@ function IndexPageNote() {
            className="back-button"/>
         </Col>
         <Col>
-          <h1 className="text-center">{topic}</h1>
+          <h1 >{topic} <Button onClick={() => {
+          if (window.confirm('Delete this item?')) {
+            DeleteTopicAndRefresh();
+          } else {
+            console.log('Cancellation confirmed');
+          }
+        }} className='btn-danger'>
+          Delete Note
+        </Button></h1>
         </Col>
       </Row>
 
@@ -96,7 +118,7 @@ function IndexPageNote() {
                 className="non-editing-text"
                 style={{ cursor: 'pointer' }}
               >
-                {title || 'Untitled Note'}
+                {title  || 'Untitled Note'}
               </h3>
             )}
           </Form.Group>

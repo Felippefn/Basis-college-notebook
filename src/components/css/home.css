@@ -87,3 +87,31 @@ body{
       font-size: 20px; /* Adjust size for smaller devices */
     }
   }
+
+
+  .schedule-row .col {
+    border-right: 1px solid black; /* Adds a line between columns */
+    text-align: center;
+    padding: 5px;
+
+  }
+  
+  .schedule-row .col:last-child {
+    border-right: none; /* Remove the line on the last column */
+  }
+  
+  a{
+    text-decoration: none;
+    
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .back-button {
+      display: none;
+      margin-bottom: 10px;
+    }
+  }
