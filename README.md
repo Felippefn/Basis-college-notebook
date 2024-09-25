@@ -1,6 +1,6 @@
 # 📅 **Basis** – Schedule, Note-Taking & ToDoList App
 
-
+![Alt Text](basis.png)
 
 Welcome to **Basis**! This application is a sleek, intuitive schedule and note-taking tool designed to keep your daily tasks, projects, and important notes organized. Whether you're managing personal goals or team projects, this app is here to help streamline your workflow.
 
