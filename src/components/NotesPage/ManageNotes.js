@@ -71,7 +71,6 @@ function ManageNotes() {
           backgroundColor: 'transparent',
           padding: '20px',
           borderRadius: '10px',
-          
           zIndex: 1000
         }}>
           <textarea

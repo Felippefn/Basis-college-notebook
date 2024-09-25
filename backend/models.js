@@ -15,16 +15,10 @@ const topicSchema = new mongoose.Schema({
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note', default: null }],  // Referencing the Note model
 });
 
-const scheduleSchema = new mongoose.Schema({
-    day: String,
-    task: {type: String, required: true},
-    timeRange: {type: Number, required: true}
-})
 
 // Create the models
 const Note = mongoose.model('Note', noteSchema);
 const Topic = mongoose.model('Topic', topicSchema);
-const Schedule = mongoose.model('Schedule', scheduleSchema);
 
 
-module.exports = { Note, Topic, Schedule};
+module.exports = { Note, Topic};

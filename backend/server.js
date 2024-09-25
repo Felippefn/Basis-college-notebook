@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noterouter'); // Adjust the path
+const scheduleRoutes = require('./routes/scheduleRouter'); // Adjust the path
+
 
 const app = express();
 const port = 5000;
@@ -18,6 +20,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
 app.use('/api', noteRoutes);
+app.use('/json', scheduleRoutes);
 
 app.listen(port, () => {
     console.log(`Backend server is running on port ${port}`);

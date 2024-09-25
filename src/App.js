@@ -8,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home';
 import IndexPageNote from './components/NotesPage/IndexPageNote';
 import TopicNotesPage from './components/NotesPage/TopicNotesPage'; // Create this component to display notes
-import Schedule from './components/Schedule'
-import Event from './components/Event'
+import Schedule from './components/SchedulePage/Schedule'
+//import Event from './components/EventsPage/Event'
 import ToDoList from './components/ToDoListPage/ToDoList'
 import './components/css/home.css'
 import ManageNotes from './components/NotesPage/ManageNotes';
@@ -24,7 +24,6 @@ function App() {
         <Route path="/topics/:topicId/notes" element={<TopicNotesPage />} />
         <Route path="/topics/:topicId/notes/:noteId" element={<IndexPageNote />} />
         <Route path="/schedule" element={<Schedule />} />
-        <Route path="/event" element={<Event />} />
         <Route path="/todo-list" element={<ToDoList />} />
       </Routes>
     </Router>

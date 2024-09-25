@@ -26,13 +26,7 @@ function IndexPageNote() {
       .catch(err => console.error(err));
   }, [topicId, noteId]);
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/api/topics/${topicId}/notes/`)
-      .then(res => {
-        setTopic(res.data.name)
-      })
-      .catch(err => console.error(err));
-  }, [topicId]);
+  
 
   // Handle save action, either auto-save or button click
   const saveNote = useCallback(() => {
@@ -48,7 +42,7 @@ function IndexPageNote() {
       .catch(err => console.error(err));
   }, [title, content, topicId, noteId]); // Add dependencies that affect saveNote
 
-  const DeleteTopicAndRefresh = async () => {
+  const DeleteNoteAndRefresh = async () => {
     window.confirm();
     try {
       const response = await axios.delete(`http://localhost:5000/api/topics/${topicId}/notes/${noteId}/del`);
@@ -83,19 +77,24 @@ function IndexPageNote() {
     <Container className="mt-4">
       <Row className="align-items-center mb-3">
         <Col xs="auto">
-          <GrLinkPrevious onClick={() => navigate(-1)}
-           className="back-button"/>
+          <GrLinkPrevious className = "back-button" onClick={() => {
+            navigate(-1);
+            setTimeout(() => {
+              window.location.reload();
+            }, 300); // Optional delay to ensure navigation completes
+
+          }} />
         </Col>
         <Col>
           <h1 >{topic} <Button onClick={() => {
-          if (window.confirm('Delete this item?')) {
-            DeleteTopicAndRefresh();
-          } else {
-            console.log('Cancellation confirmed');
-          }
-        }} className='btn-danger'>
-          Delete Note
-        </Button></h1>
+            if (window.confirm('Delete this item?')) {
+              DeleteNoteAndRefresh();
+            } else {
+              console.log('Cancellation confirmed');
+            }
+          }} className='btn-danger'>
+            Delete Note
+          </Button></h1>
         </Col>
       </Row>
 
@@ -118,7 +117,7 @@ function IndexPageNote() {
                 className="non-editing-text"
                 style={{ cursor: 'pointer' }}
               >
-                {title  || 'Untitled Note'}
+                {title || 'Untitled Note'}
               </h3>
             )}
           </Form.Group>

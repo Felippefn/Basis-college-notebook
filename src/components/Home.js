@@ -32,10 +32,6 @@ function Home() {
             <GrSchedules fontSize={"100px"} />
             <p>Check Schedule</p>
           </a>
-          <a href='/event' className="col tagHome">
-            <GrCalendar fontSize={"100px"} />
-            <p>Events</p>
-          </a>
           <a href='/todo-list' className="col tagHome">
             <GrList fontSize={"100px"} />
             <p>To-Do List</p>
