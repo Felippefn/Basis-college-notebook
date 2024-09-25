@@ -60,3 +60,8 @@ Welcome to **Basis**! This application is a sleek, intuitive schedule and note-t
 ├── package.json       # Dependencies and scripts
 └── README.md          # Project documentation
 ```
+
+# Thank You for Using my App! 🎉
+Be sure to star 🌟 this repository if you find it helpful, and feel free to share with others!
+
+You can customize the project name, URLs, tech stack, and other details specific to your app
