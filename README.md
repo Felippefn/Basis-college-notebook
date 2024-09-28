@@ -1,6 +1,6 @@
 # 📅 **Basis** – Schedule, Note-Taking & ToDoList App
 
-
+![Alt Text](basis.png)
 
 Welcome to **Basis**! This application is a sleek, intuitive schedule and note-taking tool designed to keep your daily tasks, projects, and important notes organized. Whether you're managing personal goals or team projects, this app is here to help streamline your workflow.
 
@@ -60,3 +60,8 @@ Welcome to **Basis**! This application is a sleek, intuitive schedule and note-t
 ├── package.json       # Dependencies and scripts
 └── README.md          # Project documentation
 ```
+
+# Thank You for Using my App! 🎉
+Be sure to star 🌟 this repository if you find it helpful, and feel free to share with others!
+
+You can customize the project name, URLs, tech stack, and other details specific to your app
