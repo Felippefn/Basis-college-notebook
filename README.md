@@ -65,3 +65,6 @@ Welcome to **Basis**! This application is a sleek, intuitive schedule and note-t
 Be sure to star 🌟 this repository if you find it helpful, and feel free to share with others!
 
 You can customize the project name, URLs, tech stack, and other details specific to your app
+
+https://github.com/user-attachments/assets/590f11cb-438a-4fb9-8503-b73dbb947c54
+
